@@ -1,0 +1,42 @@
+pipeline {
+    agent {
+        node{
+        label 'maven-server'
+        }
+    }
+    
+    tools {
+        maven 'mvn'
+    }
+
+   stages {
+        stage('Code Checkout') {
+         steps {
+            git credentialsId: 'ps', url: 'https://github.com/Vamsi-PrimeSoft/Sonar.git'
+         }
+      }
+      stage('Build Project') {
+          steps {
+                          sh "mvn install"
+                         }
+      }
+      
+      stage('Create Sonar Proejct') {
+          steps {
+                sh 'curl -X POST -u "admin:Vamsi@777" http://192.168.56.104:9000/api/projects/create?name=devops-testing&project=devops-testing"'
+            }
+      }
+      
+      stage('Set Quality Gate') {
+          steps {
+              sh 'curl -u "admin:Vamsi@777" -X POST http://192.168.56.104:9000/api/qualitygates/select?projectKey=SonarTesting&gateId=AYkg3V9M0pNeFxpA_Kuv"'
+          }
+      }
+      
+      stage('Sonarqube Analysis') {
+          steps {
+              sh """mvn -U install sonar:sonar -Dsonar.host.url=http://192.168.56.104:9000 -Dsonar.login=sqa_911abff86434fcc6a672066926e642c34d97d7d0 -Dsonar.projectKey=SonarTesting -Dsonar.projectName=devops-testing -Dsonar.sources=. -Dsonar.java.binaries=**/* -Dsonar.language=java -Dsonar.exclusions=src/test/java/com/mycompany/app/AppTest.java"""
+          }
+      }
+   }
+}
