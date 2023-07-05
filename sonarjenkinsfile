@@ -17,11 +17,11 @@ pipeline {
                          }
       }
       
-      stage('Create Sonar Proejct') {
-          steps {
-                sh 'curl -X POST -u "admin:Vamsi@777" http://192.168.56.104:9000/api/projects/create?name=devops-testing&project=devops-testing"'
-            }
-      }
+      stage('Create Sonar Project') {
+    steps {
+        sh 'curl -X POST -u "admin:Vamsi@777" "http://192.168.56.104:9000/api/projects/create?name=devops-testing&project=devops-testing"'
+    }
+}
       
       stage('Set Quality Gate') {
           steps {
