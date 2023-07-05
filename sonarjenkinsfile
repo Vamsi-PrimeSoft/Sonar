@@ -10,11 +10,7 @@ pipeline {
     }
 
    stages {
-        stage('Code Checkout') {
-         steps {
-            git credentialsId: 'ps', url: 'https://github.com/Vamsi-PrimeSoft/Sonar.git'
-         }
-      }
+    
       stage('Build Project') {
           steps {
                           sh "mvn install"
