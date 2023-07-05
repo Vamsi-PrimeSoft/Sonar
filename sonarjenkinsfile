@@ -23,11 +23,11 @@ pipeline {
     }
 }
       
-      stage('Set Quality Gate') {
-          steps {
-              sh 'curl -u "admin:Vamsi@777" -X POST http://192.168.56.104:9000/api/qualitygates/select?projectKey=SonarTesting&gateId=AYkg3V9M0pNeFxpA_Kuv"'
-          }
-      }
+    stage('Set Quality Gate') {
+    steps {
+        sh 'curl -u "admin:Vamsi@777" -X POST "http://192.168.56.104:9000/api/qualitygates/select?projectKey=SonarTesting&gateId=AYkg3V9M0pNeFxpA_Kuv"'
+    }
+}
       
       stage('Sonarqube Analysis') {
           steps {
